@@ -45,9 +45,72 @@ void Solver_CG::solve(
     )
 {
 
+  int n = _a.get_size();
 
-  // TODO: Solver_CG::solve()
+  double norm;
+  unsigned int ite = 0;
 
+  // malte's:
+  
+  //double norm_r2, norm_r, lambda, beta;
+  //Array1D<double> r(n);
+  //Array1D<double> p(n);
+  //Array1D<double> ap(n);
+  //r = _f - _a * _u;
+  //norm_r2 = r*r;
+  //p = r;
+
+  //do {
+    //ap = _a * p;
+    //norm_r = norm_r2;
+    //lambda = norm_r / (p * ap);
+
+    //// update
+    //_u = _u + lambda * p;
+    //r = r - lambda * ap;
+    //norm_r2 = r * r;
+
+    //beta = norm_r2 / norm_r;
+    //p = r + beta * p;
+
+    //ite++;
+
+  //} while (ite < max_ite && sqrt(norm_r2) > tol_ite);
+
+  // mine:
+
+  Array1D<double> r(n);
+  Array1D<double> r_old(n);
+  Array1D<double> Ap(n);
+  Array1D<double> p(n);
+  double lambda;
+  double beta;
+
+  // calculate initial residual
+  // r = b - A*x
+
+  r = _f - _a * _u;
+  p = r;
+  do {
+    Ap = _a * p; 
+    lambda = (r * r) / (p * Ap);
+    _u = _u + lambda * p;
+    r_old = r;
+    r = r - lambda * Ap;
+    beta = (r * r) / (r_old * r_old);
+    p = r + beta * p;
+
+    ite++;
+    norm = sqrt(r * r);
+  } while (norm > tol_ite && ite < max_ite);
+
+  r.print("r:");
+  if (ite == max_ite) {
+    throw runtime_error(string("CG: Not converged in max_ite!!"));
+  } else {
+    cout << "CG solver converged successfully in " << ite << 
+      " iterations with tolerance " << tol_ite << "." << endl; 
+  }
 
   return;
 }

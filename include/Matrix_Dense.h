@@ -32,6 +32,9 @@ mvs@ibb.uni-stuttgart.de
 
 #ifndef MATRIX_DENSE_H_
 #define MATRIX_DENSE_H_
+#include <stdexcept>
+#include <string>
+#include <sstream>
 
 
 /** Klasse zur Beschreibung einer Matrix im dense-Format
@@ -113,14 +116,20 @@ public:
       Array1D<double> const&      v                   ///< Vektor, mit dem multipliziert werden soll (i)
       ) const
   {
-    //if (v.get_size() != this->get_size()) 
-      //throw;
+    if (v.get_size() != num_eq) {
+      stringstream msg;
+      msg << "Number of columns in matrix: "
+        << num_eq 
+        << " != number of rows in multiplicant vector: " 
+        << v.get_size();
+      throw runtime_error(msg.str());
+    }
 
     Array1D<double> result( v.get_size() );
     result.init();
 
-    for (unsigned int i = 0; i < v.get_size(); i++) {
-      for (unsigned int j = 0; j < v.get_size(); j++) {
+    for (unsigned int i = 0; i < num_eq; i++) {
+      for (unsigned int j = 0; j < num_eq; j++) {
         result[i] += value[i][j] * v[j];
       }
     }

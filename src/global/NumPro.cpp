@@ -53,7 +53,8 @@ NumPro :: NumPro()
    ************************************/
   stiffness_matrix = new Matrix_Dense( discretization );
   //solver           = new Solver_LU();
-  solver           = new Solver_GS();
+  //solver           = new Solver_GS();
+  solver           = new Solver_CG(1e-8, 10000);
 
 
 

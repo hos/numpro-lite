@@ -29,11 +29,8 @@ mvs@ibb.uni-stuttgart.de
 
  */
 
-
-
 #include "Main.h"
 #include "Solver.h"
-
 
 /** Loesung des LGS a*u=f mit LU-Faktorisierung (LU)
  *

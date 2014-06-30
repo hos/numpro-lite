@@ -102,6 +102,15 @@ public:
       const Array1D<double> &     _v                   // Vektor, mit dem multipliziert werden soll (i)
       ) const
   {
+    if (_v.get_size() != num_eq) {
+      stringstream msg;
+      msg << "Number of columns in matrix: "
+        << num_eq 
+        << " != number of rows in multiplicant vector: " 
+        << _v.get_size();
+      throw runtime_error(msg.str());
+    }
+
     Array1D<double> result( _v.get_size() );
     result.init();
 
