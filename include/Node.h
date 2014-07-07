@@ -102,7 +102,7 @@ public:
    */
   void output_res(ostream &os)
   {
-    // TODO Ausgabe der Knoten Lösungen
+    os << id+1 << " " << sol[0] << "  " << sol[1] << "  0.0" << endl;
     return;
   }
 

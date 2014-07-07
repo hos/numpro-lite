@@ -59,7 +59,8 @@ public:
 
 
   void solve(Matrix& _a, Array1D<double>& _u, Array1D<double>& _f);
-
+  Array1D<double> precond(Matrix&, Array1D<double>&);
+  
 
 };
 

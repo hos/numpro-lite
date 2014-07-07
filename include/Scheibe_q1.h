@@ -77,7 +77,11 @@ public:
    */
   void output_res(ostream &os)
   {
-    // TODO Ausgabe der Spannungen
+    os << id+1;
+    os << " " << stress[0][0] << " " << stress[0][1] << " " << stress [0][2] << endl;
+    os << " " << stress[1][0] << " " << stress[1][1] << " " << stress [1][2] << endl;
+    os << " " << stress[3][0] << " " << stress[3][1] << " " << stress [3][2] << endl;
+    os << " " << stress[2][0] << " " << stress[2][1] << " " << stress [2][2] << endl;
 
     return;
   }

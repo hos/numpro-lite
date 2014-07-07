@@ -36,8 +36,6 @@ mvs@ibb.uni-stuttgart.de
 #include "Material.h"
 #include "Solver.h"
 
-
-
 /** Diskretisierung vorbereiten
  *  Die Diskretisierung wird fuer die Berechnung vorbereitet.
  *
@@ -68,9 +66,6 @@ Discretization::Discretization()
   material.resize(1);
   material[0] = new Material(youngs, poisson);
 
-
-
-
   /************************************
    *
    * Read geometry data
@@ -81,11 +76,8 @@ Discretization::Discretization()
 
   l_x    = 10;
   l_y    =  1;
-  div_x  =  2;
-  div_y  =  1;
-
-
-
+  div_x  =  10;
+  div_y  =  4;
 
   /************************************
    *
@@ -99,8 +91,24 @@ Discretization::Discretization()
     for (int j=0; j<div_x+1; j++)  // loop all nodes of one row (green)
       node[ j + (div_x+1)*i ] = new Node( j + (div_x+1)*i , j* l_x/div_x , i*l_y/div_y );
 
+  //double n1[] = { 0 , 0 };
+  //double n2[] = { 2 , -1 };
+  //double n3[] = { 2 , 3 };
+  //double n4[] = { -1 , 4 };
 
-
+  //for (int i = 0, k = 0; i<div_y+1; i++) {
+	  //for (int j = 0; j<div_x+1; j++, k++) {
+		  //double eta = -1. + (double) i*2./(double) div_y;
+		  //double xi = -1. + (double) j*2./(double) div_x;
+		  //double N1 = 0.25 * (1-xi)*(1-eta);
+		  //double N2 = 0.25 * (1+xi)*(1-eta);
+		  //double N3 = 0.25 * (1+xi)*(1+eta);
+		  //double N4 = 0.25 * (1-xi)*(1+eta);
+		  //node[k] = new Node(k,
+				  //N1*n1[0] + N2*n2[0] +N3*n3[0] +N4*n4[0] ,
+				  //N1*n1[1] + N2*n2[1] +N3*n3[1] +N4*n4[1] );
+	  //}
+  //}
 
   /************************************
    *
@@ -120,9 +128,6 @@ Discretization::Discretization()
           j+(div_x+1)*(i+1),
           material[0], this);
 
-
-
-
   /*************************
    *
    * Supports
@@ -136,9 +141,6 @@ Discretization::Discretization()
     node[id]->set_bc_displ(1, 1);
   }
 
-
-
-
   /*************************
    *
    * Loads
@@ -149,16 +151,10 @@ Discretization::Discretization()
   double value = 17;
   node[id]->set_bc_force(1, value);
 
-
-
-
-
   printf("\n\n");
   printf("==============================================================\n");
   printf("Prepare Discretization:\n");
   printf("==============================================================\n");
-
-
 
   /** - Freiheitsgradnummern werden an die Knoten verteilt */
   assign_dofs();
